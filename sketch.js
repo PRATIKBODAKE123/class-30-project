@@ -5,7 +5,7 @@ const Constraint = Matter.Constraint;
 
 var engine, world;
 var canvas;
-var palyer, playerBase;
+var palyer, playerBase,playerArrow;
 var computer, computerBase;
 
 //Declare an array for arrows playerArrows = [ ]
@@ -78,7 +78,7 @@ function draw() {
  
  for (var i=0; i<playerArrows; i++) 
  {
- showArrows( playerArrows,i);
+ showArrows( playerArrows[i],i);
  }
 
 
@@ -90,7 +90,8 @@ function draw() {
 
 /*********** Choose correct keyPressed() function out of these *************/
 //Display arrow and Tranjectory
-function showArrows(index, arrows) {
+function showArrows(arrows,index) {
+
   arrows[index].display();
   if(arrow.body.position.x >= width || arrow.body.position.y >= height-50){
       World.remove(world,arrow.body)
@@ -103,14 +104,15 @@ function showArrows(index, arrows) {
 function keyPressed() {
   if(keyCode === 32){
     // create an arrow object and add into an array ; set its angle same as angle of playerArcher
-
+    
     var posX = playerArcher.body.position.x;
     var posY = playerArcher.body.position.y;
     var angle = playerArcher.body.angle;
     var arrow = new PlayerArrow(posX, posY, 100, 10);
     arrow.trajectory = [];
-    Matter.Body.setAngle(arrow.body);
+    Matter.Body.setAngle(angle);
     playerArrows.push(arrow);
+    console.log(arrow)
   }
 }
 
@@ -119,9 +121,9 @@ function keyReleased () {
 
   if(keyCode === 32){
     //call shoot() function for each arrow in an array playerArrows
-    if (playerArrows.length) {
-      playerArrows[playerArrows.length - 1].shoot(angle);
+    if (playerArrows.length-1) {
       var angle = playerArcher.body.angle+PI/2;
+      playerArrows[playerArrows.length].shoot(angle);
     }
   }
 

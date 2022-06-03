@@ -7,17 +7,19 @@ class PlayerArrow {
         isStatic: true
       };
       this.width = width;
-      this.height = height;
+      this.height = height; 
       this.body = Bodies.rectangle(x, y, this.width, this.height, options);
       this.image = loadImage("./assets/arrow.png");
       World.add(world, this.body);
+
+
     }
+    
     shoot(archerAngle) {
+      var archerAngle = playerArcher.body.angle+PI/2;
       var velocity = p5.Vector.fromAngle(archerAngle);
 
       velocity.mult(20);
-      print(velocity.x);
-      print(velocity.y);
       Matter.Body.setStatic(this.body, false);
       Matter.Body.setVelocity(this.body, { x: velocity.x, y: velocity.y });
     }
